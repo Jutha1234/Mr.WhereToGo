@@ -1,11 +1,10 @@
 <?php
 $access_token = '4gdS3iXEM8IA0PC1jOgVaktQlzVHh+K5zQ5w/GELmMKFndnldIp+4+ZuB1eiGTpD0FwMNBKcOdRs9ZOE/vF26UIkR13LTIe7ezuKRMTMvrNMtc8guFCdiCfZ4Nkycl6+XXAFeKp0Se/VCMHbZb6I1QdB04t89/1O/w1cDnyilFU=';
 
-$url = 'https://api.line.me/v2/oauth/verify';
+$url = 'https://api.line.me/v2/oauth/accessToken';
 
 $arrayHeader = array();
 $arrayHeader[] = "Content-Type: application/x-www-form-urlencoded";
-$arrayHeader[] = "Authorization: Bearer {$accessToken}";
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
