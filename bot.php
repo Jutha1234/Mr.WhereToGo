@@ -1,5 +1,5 @@
 <?php
-    $accessToken = "xCdh5IflTKFJ9UZCisDTRg0itxVVQhObx8jub3RGM9gItBPdOVil+DYJznFtX3cJzOw8WvhP3rkRHrJuJmOU19dVIDhzzg35f9Q0abblFhDpDR405+7M2rFKAj+/1PW1irIeUkiCUIPkRndfcrqqywdB04t89/1O/w1cDnyilFU=";#copy Channel access token ตอนที่ตั้งค่ามาใส่
+    $accessToken = "4gdS3iXEM8IA0PC1jOgVaktQlzVHh+K5zQ5w/GELmMKFndnldIp+4+ZuB1eiGTpD0FwMNBKcOdRs9ZOE/vF26UIkR13LTIe7ezuKRMTMvrNMtc8guFCdiCfZ4Nkycl6+XXAFeKp0Se/VCMHbZb6I1QdB04t89/1O/w1cDnyilFU=";#copy Channel access token ตอนที่ตั้งค่ามาใส่
     
     $content = file_get_contents('php://input');
     $arrayJson = json_decode($content, true);
@@ -56,6 +56,7 @@
     }
 function replyMsg($arrayHeader,$arrayPostData){
         $strUrl = "https://api.line.me/v2/bot/message/reply";
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$strUrl);
         curl_setopt($ch, CURLOPT_HEADER, false);
