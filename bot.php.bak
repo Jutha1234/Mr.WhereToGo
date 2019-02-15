@@ -189,14 +189,9 @@ function GetReplyMessage($text,$myUserId) {
 			'type' => 'text',
 			'text' => $randNumber
 		]];				
-	}else{
-		$messages = [[
-			'type' => 'text',
-			'text' => 'ขอโทษครับ ผมไม่เข้าใจ'
-		]];
-	}
+	} 
 	
-	/*if (stripos($text, "Cfx Myinfo") !== false) {	
+	if (stripos($text, "Cfx Myinfo") !== false) {	
 		$messages = [[
 			'type' => 'text',
 			'text' => $myUserId
@@ -363,7 +358,7 @@ function GetReplyMessage($text,$myUserId) {
 			'type' => 'text',
 			'text' => $txt
 		]];
-	}*/ 	
+	} 	
 	return $messages;
 }
 echo "OK";
