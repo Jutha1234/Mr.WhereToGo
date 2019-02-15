@@ -1,81 +1,356 @@
 <?php
-    $accessToken = "4gdS3iXEM8IA0PC1jOgVaktQlzVHh+K5zQ5w/GELmMKFndnldIp+4+ZuB1eiGTpD0FwMNBKcOdRs9ZOE/vF26UIkR13LTIe7ezuKRMTMvrNMtc8guFCdiCfZ4Nkycl6+XXAFeKp0Se/VCMHbZb6I1QdB04t89/1O/w1cDnyilFU=";#copy Channel access token �͹����駤�������
-    
-    $content = file_get_contents('php://input');
-    $arrayJson = json_decode($content, true);
+$access_token = '4gdS3iXEM8IA0PC1jOgVaktQlzVHh+K5zQ5w/GELmMKFndnldIp+4+ZuB1eiGTpD0FwMNBKcOdRs9ZOE/vF26UIkR13LTIe7ezuKRMTMvrNMtc8guFCdiCfZ4Nkycl6+XXAFeKp0Se/VCMHbZb6I1QdB04t89/1O/w1cDnyilFU=';
+// Get POST body content
+$content = file_get_contents('php://input');
+// Parse JSON
+$events = json_decode($content, true);
+$userId = '';
+if(!file_exists("text.txt")){
+   $myfile = fopen("text.txt", "w") or die("Unable to open file!");
+   fwrite($myfile, 0);
+   fclose($myfile);
+}
+$myfile = fopen("text.txt", "r") or die("Unable to open file!");
+$shortup = (bool)fgets($myfile);
+fclose($myfile);
+#$shortup = (bool)$_COOKIE[$cookie_name];
+// Validate parsed JSON data
+if (!is_null($events['events'])) {
+	// Loop through each event
+	foreach ($events['events'] as $event) {
+		// Reply only when message sent is in 'text' format
+		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+			// Get User 
+			if ($event['source']['type'] == 'user') {
+				$userId = $event['source']['userId'];			
+			}
+			elseif ($event['source']['type'] == 'group') {
+				$userId = $event['source']['groupId'];			
+			}
+			// Get text sent
+			$text = $event['message']['text'];
+			// Get replyToken
+			$replyToken = $event['replyToken'];
+			$messages = GetReplyMessage($text,$userId);
+				
+				
+			if (!is_null($messages) ) {
 
+				// Make a POST Request to Messaging API to reply to sender
 
-    
-    $arrayHeader = array();
-    $arrayHeader[] = "Content-Type: application/json";
-    $arrayHeader[] = "Authorization: Bearer {$accessToken}";
-    
-    //�Ѻ��ͤ����ҡ�����
-    $message = $arrayJson['events'][0]['message']['text'];
-#������ҧ Message Type "Text"
-    if($message == "Hello"){
-        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = "Hello Ja";
-        replyMsg($arrayHeader,$arrayPostData);
-    }
-    #������ҧ Message Type "Sticker"
-    else if($message == "�ѹ��"){
-        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "sticker";
-        $arrayPostData['messages'][0]['packageId'] = "2";
-        $arrayPostData['messages'][0]['stickerId'] = "46";
-        replyMsg($arrayHeader,$arrayPostData);
-    }
-    #������ҧ Message Type "Image"
-    else if($message == "�ٻ��ͧ���"){
-        $image_url = "https://i.pinimg.com/originals/cc/22/d1/cc22d10d9096e70fe3dbe3be2630182b.jpg";
-        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "image";
-        $arrayPostData['messages'][0]['originalContentUrl'] = $image_url;
-        $arrayPostData['messages'][0]['previewImageUrl'] = $image_url;
-        replyMsg($arrayHeader,$arrayPostData);
-    }
-    #������ҧ Message Type "Location"
-    else if($message == "�ԡѴ�������ҡ͹"){
-        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "location";
-        $arrayPostData['messages'][0]['title'] = "�������ҡ͹";
-        $arrayPostData['messages'][0]['address'] =   "13.7465354,100.532752";
-        $arrayPostData['messages'][0]['latitude'] = "13.7465354";
-        $arrayPostData['messages'][0]['longitude'] = "100.532752";
-        replyMsg($arrayHeader,$arrayPostData);
-    }
-    #������ҧ Message Type "Text + Sticker � 1 ����"
-    else if($message == "�ҡ�͹"){
-        $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = "���ҷ�駡ѹ�";
-        $arrayPostData['messages'][1]['type'] = "sticker";
-        $arrayPostData['messages'][1]['packageId'] = "1";
-        $arrayPostData['messages'][1]['stickerId'] = "131";
-        replyMsg($arrayHeader,$arrayPostData);
-    }else{
-		$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = "Happy Valentine Day's";
-        $arrayPostData['messages'][1]['type'] = "sticker";
-        $arrayPostData['messages'][1]['packageId'] = "1";
-        $arrayPostData['messages'][1]['stickerId'] = "131";
+				$url = 'https://api.line.me/v2/bot/message/reply';
+				$data = [
+					'replyToken' => $replyToken,
+					'messages' => $messages,
+				];
+				$post = json_encode($data);
+				$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				echo $result . "\r\n";
+			}
+		}
 	}
-function replyMsg($arrayHeader,$arrayPostData){
-        $strUrl = "https://api.line.me/v2/bot/message/reply";
+}
+function GetReplyMessage($text,$myUserId) {
+	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
+	
+	if(stripos($text, "ปิดบอท") !== false){
+		$myfile = fopen("text.txt", "w") or die("Unable to open file!");
+		fwrite($myfile, 1);
+		fclose($myfile);
+	} else if(stripos($text, "เปิดบอท")!== false){
+		$myfile = fopen("text.txt", "w") or die("Unable to open file!");
+		fwrite($myfile, 0);
+		fclose($myfile);
+	}	
+	   
+	// Build message to reply back
+	if (stripos($text, "สวัสดี") !== false) {
+		//$messages = [[
+		//  'type'=> 'sticker',
+		//  'packageId'=> '1',
+		//  'stickerId'=> '3'
+		//]];
+		$messages = [[
+			'type' => 'text',
+			'text' => 'สวัสดีครับ'
+		]];
+	} else if (stripos($text, "บ้า") !== false) {
+		$messages = [[
+		  'type'=> 'sticker',
+		  'packageId'=> '1',
+		  'stickerId'=> '3'
+		]];
+	} else if (stripos($text, "555+") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ฮาๆ'
+		]];
+	} else if (stripos($text, "ฮาๆ") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => '555+'
+		]];
+	} else if (stripos($text, "เออ") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'เออ'
+		]];
+	}  else if (stripos($text, "ว่าไง") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ลืมแล้ว'
+		]];
+	}  else if (stripos($text, "เล่นอะไรกัน") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'อะไรก็ได้'
+		]];
+	} else if (stripos($text, "ไปเล่นตรงนู๊น") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'เค้าไล่กุมาเล่นตรงนี้'
+		]];
+	} else if (stripos($text, "กำ") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'กำราย'
+		]];
+	} else if (stripos($text, "คุณคือใคร") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ผมเป็นบอท'
+		]];
+	} else if (stripos($text, "ไง") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ชิวๆ'
+		]];
+	} else if (stripos($text, "จน") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'พรุ่งนี้รวยๆ'
+		]];
+	} else if (stripos($text, "รวย") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'เอามาแบ่งบ้าง'
+		]];
+	} else if (stripos($text, "ต่อ") !== false) {		
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ต่อไหน ใครรู้บ้าง'
+		]];
+	} else if (stripos($text, "ไบ้หวยหน่อย") !== false) {	
+		$digits = 3;
+                $randNumber = rand(pow(10, $digits-1), pow(10, $digits)-1);
+		$messages = [[
+			'type' => 'text',
+			'text' => $randNumber
+		]];
+	} else if (stripos($text, "2 ตัว") !== false) {	
+		$digits = 2;
+                $randNumber = rand(pow(10, $digits-1), pow(10, $digits)-1);
+		$messages = [[
+			'type' => 'text',
+			'text' => $randNumber
+		]];				
+	} 
+	
+	if (stripos($text, "Cfx Myinfo") !== false) {	
+		$messages = [[
+			'type' => 'text',
+			'text' => $myUserId
+		]];
+		
+	} else if (stripos($text, "Cfx Acc") !== false) {	
+		$messages = [[
+			'type' => 'text',
+			'text' => "ค่า server โอนมาที่ \n 718-258-018-4 \n กสิกร \n วิทยา จงอุดมพร"
+		]];
+		
+	} else if (stripos($text, "G10T") !== false) {	
+		$messages = [[
+				  "type"=> "template",
+				  "altText"=> "G10T Portal",
+				  "template"=> [
+				      "type"=> "buttons",
+				      "thumbnailImageUrl"=> "https://powerful-castle-84429.herokuapp.com/login.jpg",
+				      "title"=> "G10T Portal",
+				      "text"=> "Go to G10T Portal",
+				      "actions"=> array([
+					    "type"=> "uri",
+					    "label"=> "View detail",
+					    "uri"=> "http://www.garage10t.com"
+					  ]
+				      )
+				  ]
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$strUrl);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);    
-        curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($arrayPostData));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
-        curl_close ($ch);
-    }
-   exit;
-?>
+		]];
+		
+	} else if (stripos($text, "Cfx x2") !== false) {	
+		$messages = [[
+				 "type"=> "template",
+				  "altText"=> "this is a carousel template",
+				  "template"=> [
+				      "type"=> "carousel",
+				      "columns"=> array(
+					  [
+					    "thumbnailImageUrl"=> "https://fathomless-anchorage-14853.herokuapp.com/x1.jpg",
+					    "title"=> "this is menu",
+					    "text"=> "description",
+					    "actions"=> array(
+						[
+						    "type"=> "postback",
+						    "label"=> "Buy",
+						    "data"=> "action=buy&itemid=111"
+						],
+						[
+						    "type"=> "postback",
+						    "label"=> "Add to cart",
+						    "data"=> "action=add&itemid=111"
+						],
+						[
+						    "type"=> "uri",
+						    "label"=> "View detail",
+						    "uri"=> "https://fathomless-anchorage-14853.herokuapp.com/x1.jpg",
+						]
+					    )
+					  ],
+					  [
+					    "thumbnailImageUrl"=> "https://fathomless-anchorage-14853.herokuapp.com/x2.jpg",
+					    "title"=> "this is menu",
+					    "text"=> "description",
+					    "actions"=> array(
+						[
+						    "type"=> "postback",
+						    "label"=> "Buy",
+						    "data"=> "action=buy&itemid=222"
+						],
+						[
+						    "type"=> "postback",
+						    "label"=> "Add to cart",
+						    "data"=> "action=add&itemid=222"
+						],
+						[
+						    "type"=> "uri",
+						    "label"=> "View detail",
+						    "uri"=> "https://fathomless-anchorage-14853.herokuapp.com/x2.jpg",
+						]
+					    )
+					  ]
+				      )
+				  ]
+
+		]];
+		
+	} else if (stripos($text, "Cfx xy") !== false) {	
+		$messages = [[
+				  "type"=> "template",
+				  "altText"=> "this is a buttons template",
+				  "template"=> [
+				      "type"=> "buttons",
+				      "thumbnailImageUrl"=> "https://fathomless-anchorage-14853.herokuapp.com/YDSY4925.JPG",
+				      "title"=> "Menu",
+				      "text"=> "Please select",
+				      "actions"=> array(
+					  [
+					    "type"=> "message",
+					    "label"=> "Yes",
+					    "text"=> "yes"
+					  ],
+					  [
+					    "type"=> "message",
+					    "label"=> "No",
+					    "text"=> "no"
+					  ],[
+					    "type"=> "uri",
+					    "label"=> "View detail",
+					    "uri"=> "https://www.dropbox.com/sh/i7jfxjntjldsglo/AAAufjP0Q8jg5SHJl6yJZUv6a?dl=0"
+					  ]
+				      )
+				  ]
+
+		]];
+		
+	} else if (stripos($text, "Cfx ask") !== false) {
+		$splitStr = explode('#',$text);
+		if(count($splitStr) >= 4){
+			$messages = [[
+					  "type"=> "template",
+					  "altText"=> $splitStr[1],
+					  "template"=> [
+					      "type"=> "confirm",
+					      "text"=> $splitStr[1],
+					      "actions"=> array(
+						  [
+						    "type"=> "message",
+						    "label"=> $splitStr[2],
+						    "text"=> $splitStr[2]
+						  ],
+						  [
+						    "type"=> "message",
+						    "label"=> $splitStr[3],
+						    "text"=> $splitStr[3]
+						  ]
+					      )
+					  ]
+
+			]];
+		} else {
+			$messages = [[
+			'type' => 'text',
+			'text' => "ผมไม่เข้าใจ"
+		]];
+		}
+		
+	} else if (stripos($text, "Cfx saimai") !== false) {	
+		$splitStr = explode('#',$text);
+		if(count($splitStr) >= 2) {
+			$userId = "C6614ebe54e49c320307197b657d07202";
+			$messages = [[
+				'type' => 'text',
+				'text' => $splitStr[1]
+			]];
+		}
+	} else if (stripos($text, "cfx Fac") !== false) {	
+		$feedUrl = 'https://cdn-nfs.forexfactory.net/ff_calendar_thisweek.xml?v=1';
+		$xml = simplexml_load_file($feedUrl);
+		$txt = '';
+		$myDate = '';
+		$myOldDate = DateTime::createFromFormat('d-m-Y', '01-01-2017');
+		#echo $xml->weeklyevents->event->title;
+			foreach($xml->children() as $event)
+			{	 
+			  $myDate = (string)$event->date;
+		          $myTime = (string)$event->time;
+			  $strTime = $myDate . ' ' . $myTime;
+			  $date =  DateTime::createFromFormat('d-m-Y H:ia', $strTime);			  
+			  $date->modify('+7 hours');		
+			  
+			  if((string)$date->format('d-m-Y') != (string)$myOldDate->format('d-m-Y')){
+				#echo $date->format('d-m-Y H:i:s');
+				#$myDate = $date->format('d-m-Y');
+				$txt .= (string)$date->format('d-m-Y') . "\n";
+				$myOldDate = $date;
+			   }
+			   if($event->impact == 'High'){
+				$txt .= ($event->country) . ' ' . (string)($date->format('H:ia')) . ' ' . ($event->title) . "\n";
+			   }
+			}
+		           
+		$messages = [[
+			'type' => 'text',
+			'text' => $txt
+		]];
+	} 	
+	return $messages;
+}
+echo "OK";
