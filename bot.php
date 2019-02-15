@@ -80,49 +80,75 @@ function GetReplyMessage($text,$myUserId) {
 	} else if (stripos($text, "ป้อม") !== false) {
 		$messages = [[
 			'type' => 'text',
-			'text' => '2019-02-07 13:00:00 - 2019-02-07 15:00:00  Kapil, AWS Architect will come to visit Netka,please be invited to join the meeting \r\n
-					   2019-01-18 07:00:00 - 2019-01-18 09:00:00  พี่อ้อยนิมนต์หลวงปู่บุญจันทร์มาฉันเช้าที่ออฟฟิส ขอเชิญพวกเรามาร่วมทำบุญและฟังเทศน์ ลป บุญจันทร์ ด้วยกันค่ะ  \r\n
-					   2019-01-08 09:30:00 - 2019-01-08 17:00:00  [Netka Academy] NSD 001: NSD  (Install + Patch , Setup , Report Tools , Admin) by K. Pom'
+			'text' => '2019-03-01 08:00 - 18:00  ไปงาน Netka meetup ที่พัทยาจ้า '
 		]];
-	} else if (stripos($text, "555+") !== false) {		
+	}else if (stripos($text, "วสุต") !== false) {
 		$messages = [[
 			'type' => 'text',
-			'text' => 'ฮาๆ'
+			'text' => '2019-02-01 10:00 - 12:00  ไป CAT CSS บางรัก  '
+		]];
+	}else if (stripos($text, "นิน") !== false) {
+		$messages = [[
+			'type' => 'text',
+			'text' => '2019-02-01 10:00 - 12:00  นัดคุยงาน  Siam Piwat'
+		]];
+	}else if (stripos($text, "โทนี่") !== false) {
+		$messages = [[
+			'type' => 'text',
+			'text' => '2019-02-23 08:00 - 18:00  ลาพักร้อน   ไปดู  คอนเสริตร์  BNK ที่  ICON Siam '
+		]];
+	}else if (stripos($text, "น้อยหน่า") !== false) {
+		$messages = [[
+			'type' => 'text',
+			'text' => '2019-03-11-2019-06-06 08:00 - 18:00  ลาคลอดจ้าไม่ไหวแล้ว '
+		]];
+	}else if (stripos($text, "เต้") !== false) {
+		$messages = [[
+			'type' => 'text',
+			'text' => '2019-03-01 08:00 - 18:00  ลาไปทำหมัน '
+		]];
+	}else if (stripos($text, "พี่เอิร์ธ") !== false) {
+		$messages = [[
+			'type' => 'text',
+			'text' => '2019-02-28 - 18:00  ไปหาลูกค้า Interlink '
+		]];
+	}else if (stripos($text, "555") !== false) {		
+		$messages = [[
+			'type' => 'sticker',
+			'packageId' => '1',
+			'stickerId' => '100'
 		]];
 	} else if (stripos($text, "ฮาๆ") !== false) {		
 		$messages = [[
-			'type' => 'text',
-			'text' => '555+'
+			'type' => 'sticker',
+			'packageId' => '1',
+			'stickerId' => '100'
 		]];
-	} else if (stripos($text, "เออ") !== false) {		
+	}else if (stripos($text, "วันนี้ใครลาบ้าง") !== false) {		
 		$messages = [[
 			'type' => 'text',
-			'text' => 'เออ'
+			'text' => 'วันนี้ยังไม่มีใครลา'
 		]];
-	}  else if (stripos($text, "ว่าไง") !== false) {		
+	}else if (stripos($text, "ว่าไง") !== false) {		
 		$messages = [[
 			'type' => 'text',
-			'text' => 'ลืมแล้ว'
+			'text' => 'ไม่ว่าไงจ้า '
 		]];
-	}  else if (stripos($text, "เล่นอะไรกัน") !== false) {		
+	} else if (stripos($text, "เล่นอะไรกัน") !== false) {		
 		$messages = [[
 			'type' => 'text',
-			'text' => 'อะไรก็ได้'
+			'text' => 'ไม่ได้เล่นจ้านี่คือการทดสอบระบบ'
 		]];
 	} else if (stripos($text, "ไปเล่นตรงนู๊น") !== false) {		
 		$messages = [[
-			'type' => 'text',
-			'text' => 'เค้าไล่กุมาเล่นตรงนี้'
+			'type' => 'sticker',
+			'packageId' => '1',
+			'stickerId' => '10'
 		]];
-	} else if (stripos($text, "กำ") !== false) {		
+	}  else if (stripos($text, "คุณคือใคร") !== false) {		
 		$messages = [[
 			'type' => 'text',
-			'text' => 'กำราย'
-		]];
-	} else if (stripos($text, "คุณคือใคร") !== false) {		
-		$messages = [[
-			'type' => 'text',
-			'text' => 'ผมเป็นบอท'
+			'text' => 'ผมเป็นบอท '
 		]];
 	} else if (stripos($text, "ไง") !== false) {		
 		$messages = [[
@@ -172,26 +198,7 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => "ค่า server โอนมาที่ \n 718-258-018-4 \n กสิกร \n วิทยา จงอุดมพร"
 		]];
 		
-	} else if (stripos($text, "G10T") !== false) {	
-		$messages = [[
-				  "type"=> "template",
-				  "altText"=> "G10T Portal",
-				  "template"=> [
-				      "type"=> "buttons",
-				      "thumbnailImageUrl"=> "https://powerful-castle-84429.herokuapp.com/login.jpg",
-				      "title"=> "G10T Portal",
-				      "text"=> "Go to G10T Portal",
-				      "actions"=> array([
-					    "type"=> "uri",
-					    "label"=> "View detail",
-					    "uri"=> "http://www.garage10t.com"
-					  ]
-				      )
-				  ]
-
-		]];
-		
-	} else if (stripos($text, "Cfx x2") !== false) {	
+	}else if (stripos($text, "Cfx x2") !== false) {	
 		$messages = [[
 				 "type"=> "template",
 				  "altText"=> "this is a carousel template",
