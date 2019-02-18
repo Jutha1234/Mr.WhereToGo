@@ -95,7 +95,7 @@ function GetReplyMessage($text,$myUserId) {
 	}else if (stripos($text, "โทนี่") !== false) {
 		$messages = [[
 			'type' => 'text',
-			'text' => '2019-02-23 08:00 - 18:00  ลาพักร้อน   ไปดู  คอนเสริตร์  BNK ที่  ICON Siam '
+			'text' => '2019-02-23 08:00 - 18:00  ลาพักร้อน   ไปดู  คอนเสริตร์  BNK ที่  ICON Siam !!!!! '
 		]];
 	}else if (stripos($text, "น้อยหน่า") !== false) {
 		$messages = [[
@@ -161,7 +161,7 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => 'ชิวๆ'
 		]];
 	} else if (stripos($text, "จน") !== false) {		
-		$messages = [[
+		$messages = [[//
 			'type' => 'text',
 			'text' => 'พรุ่งนี้รวยๆ'
 		]];
