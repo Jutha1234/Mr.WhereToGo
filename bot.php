@@ -92,9 +92,7 @@ function GetReplyMessage($text,$myUserId) {
 	} 
 	else if ($haveWhereToGo  != "" && $who  != "")
 	{
-		if($when == "")
-			$when = "วันนี้";
-		
+ 
 		$messages = [[
 			'type' => 'text',
 			'text' =>  WhereToGo($who,$when)
