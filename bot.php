@@ -65,6 +65,11 @@ if (!is_null($events['events'])) {
 function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
 	$groupWhereToGo = array('ไปไหน','อยู่ไหน','อยู่ไหม');
+	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว');
+
+	$haveWhereToGo = searchGroup($groupWhereToGo,$text);
+	$who = searchGroup($groupWho,$text);
+
 	
 	if(stripos($text, "ปิดบอท") !== false){
 		$myfile = fopen("text.txt", "w") or die("Unable to open file!");
@@ -78,18 +83,27 @@ function GetReplyMessage($text,$myUserId) {
 	   
 	// Build message to reply back
 	if (stripos($text, "สวัสดี") !== false) {
-		$response = "";
-		if (searchGroup($groupWhereToGo,$text))
-			$response = "มีคำกรุ๊ป groupWhereToGo" . implode(" ",$groupWhereToGo);
-		else 
-			$response = "ไม่มีคำกรุ๊ป groupWhereToGo" . implode(" ",$groupWhereToGo);
-
-		 
 		$messages = [[
 			'type' => 'text',
-			'text' => 'สวัสดีครับ'. $response
+			'text' => 'สวัสดีครับ'
 		]];
-	} else if (stripos($text, "ป้อม") !== false) {
+	} 
+	else if ($haveWhereToGo  != "" && $who  != "" )
+	{
+		$messages = [[
+			'type' => 'text',
+			'text' => $who . "ไปไหนสักแห่ง"
+		]];
+	
+	}
+	else if ($haveWhereToGo  != "" && $who  == "" )
+	{
+		$messages = [[
+			'type' => 'text',
+			'text' => 'ใครไปไหน'
+		]];
+	}
+	else if (stripos($text, "ป้อม") !== false) {
 		$messages = [[
 			'type' => 'text',
 			'text' => '2019-03-01 08:00 - 18:00  ไปงาน Netka meetup ที่พัทยาจ้า '
@@ -380,11 +394,11 @@ function GetReplyMessage($text,$myUserId) {
 }
 
 function searchGroup($ArrGroup,$text){
-	$have_word = false ;
+	$have_word = "" ;
 	foreach ($ArrGroup as $word) {
 		if (stripos($text, $word) !== false) {
 			 
-			$have_word = true;
+			$have_word = $word;
 		}
 	}
 	return $have_word ;
