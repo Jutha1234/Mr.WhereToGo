@@ -79,9 +79,9 @@ function GetReplyMessage($text,$myUserId) {
 	if (stripos($text, "สวัสดี") !== false) {
 		$response = "";
 		if (searchGroup($groupWhereToGo,$text))
-			$response = "มีคำกรุ๊ป groupWhereToGo";
+			$response = "มีคำกรุ๊ป groupWhereToGo" . implode(" ",$groupWhereToGo);
 		else 
-			$response = "ไม่มีคำกรุ๊ป groupWhereToGo";
+			$response = "ไม่มีคำกรุ๊ป groupWhereToGo" . implode(" ",$groupWhereToGo);
 
 		 
 		$messages = [[
