@@ -411,6 +411,6 @@ function searchGroup($ArrGroup,$text){
 function WhereToGo($who,$when){
 
 	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
-	return  $response;
+	return  "hello";
 }
 echo "OK";
