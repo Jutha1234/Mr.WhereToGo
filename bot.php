@@ -1,4 +1,5 @@
 <?php
+include 'config_project.php';
 $access_token = '4gdS3iXEM8IA0PC1jOgVaktQlzVHh+K5zQ5w/GELmMKFndnldIp+4+ZuB1eiGTpD0FwMNBKcOdRs9ZOE/vF26UIkR13LTIe7ezuKRMTMvrNMtc8guFCdiCfZ4Nkycl6+XXAFeKp0Se/VCMHbZb6I1QdB04t89/1O/w1cDnyilFU=';
 // Get POST body content
 $content = file_get_contents('php://input');
@@ -73,9 +74,24 @@ function GetReplyMessage($text,$myUserId) {
 	   
 	// Build message to reply back
 	if (stripos($text, "สวัสดี") !== false) {
+		$databack = "";
+		$strSQL =  "select * from calendar where id = 110" ;
+ 
+		$rs = $conn->query($strSQL);
+		if($rs -> rowCount() > 0){
+			$i=0;
+			foreach($rs as $row){
+ 				$databack  = $row['start'];
+				 
+				 
+				$i++;
+			}
+		}
+
+
 		$messages = [[
 			'type' => 'text',
-			'text' => 'สวัสดีครับ'
+			'text' => 'สวัสดีครับ' . $databack
 		]];
 	} else if (stripos($text, "ป้อม") !== false) {
 		$messages = [[
