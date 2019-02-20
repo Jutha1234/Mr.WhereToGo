@@ -73,9 +73,11 @@ function GetReplyMessage($text,$myUserId) {
 	   
 	// Build message to reply back
 	if (stripos($text, "สวัสดี") !== false) {
+		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadCust.php?cal_id=110');
+
 		$messages = [[
 			'type' => 'text',
-			'text' => 'สวัสดีครับ'
+			'text' => 'สวัสดีครับ'. $response
 		]];
 	} else if (stripos($text, "ป้อม") !== false) {
 		$messages = [[
