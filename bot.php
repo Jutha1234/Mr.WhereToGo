@@ -66,11 +66,9 @@ function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
 	$groupWhereToGo = array('ไปไหน','อยู่ไหน','อยู่ไหม');
 	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว');
-	$groupWhen = array('วันนี้','พรุ่งนี้','เมื่อวาน');
 
 	$haveWhereToGo = searchGroup($groupWhereToGo,$text);
 	$who = searchGroup($groupWho,$text);
-	$when = searchGroup($groupWhen,$text);
 
 	
 	if(stripos($text, "ปิดบอท") !== false){
@@ -90,14 +88,11 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => 'สวัสดีครับ'
 		]];
 	} 
-	else if ($haveWhereToGo  != "" && $who  != "")
+	else if ($haveWhereToGo  != "" && $who  != "" )
 	{
-		if($when == "")
-			$when = "วันนี้";
-		
 		$messages = [[
 			'type' => 'text',
-			'text' =>   'ไปไหนนะ'           //WhereToGo($who,$when)
+			'text' => $who . "ไปไหนสักแห่ง"
 		]];
 	
 	}
@@ -105,7 +100,7 @@ function GetReplyMessage($text,$myUserId) {
 	{
 		$messages = [[
 			'type' => 'text',
-			'text' => 'ใคร' . $haveWhereToGo ;
+			'text' => 'ใครไปไหน'
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
@@ -408,9 +403,8 @@ function searchGroup($ArrGroup,$text){
 	}
 	return $have_word ;
 }
-function WhereToGo($who,$when){
+function CallNSD(){
 
-	//$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
-	return  "hello";
+	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadCust.php?cal_id=110');
 }
 echo "OK";
