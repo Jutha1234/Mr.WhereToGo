@@ -97,7 +97,7 @@ function GetReplyMessage($text,$myUserId) {
 		
 		$messages = [[
 			'type' => 'text',
-			'text' =>  WhereToGo($who,$when)
+			'text' =>  'http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when . WhereToGo($who,$when)
 		]];
 	
 	}
