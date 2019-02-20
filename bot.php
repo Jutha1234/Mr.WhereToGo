@@ -60,10 +60,11 @@ if (!is_null($events['events'])) {
 }
 
 
-$groupWhereToGo = array('ไปไหน','อยู่ไหน');
+ 
 
 function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
+	$groupWhereToGo = array('ไปไหน','อยู่ไหน');
 	
 	if(stripos($text, "ปิดบอท") !== false){
 		$myfile = fopen("text.txt", "w") or die("Unable to open file!");
