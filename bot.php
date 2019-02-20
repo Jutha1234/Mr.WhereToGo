@@ -58,6 +58,10 @@ if (!is_null($events['events'])) {
 		}
 	}
 }
+
+
+$groupWhereToGo = array('ไปไหน','อยู่ไหน');
+
 function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
 	
@@ -73,8 +77,13 @@ function GetReplyMessage($text,$myUserId) {
 	   
 	// Build message to reply back
 	if (stripos($text, "สวัสดี") !== false) {
-		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadCust.php?cal_id=110');
+		$response = "";
+		if (searchGroup($groupWhereToGo,$text))
+			$response = "มีคำกรุ๊ป groupWhereToGo";
+		else 
+			$response = "ไม่มีคำกรุ๊ป groupWhereToGo";
 
+		 
 		$messages = [[
 			'type' => 'text',
 			'text' => 'สวัสดีครับ'. $response
@@ -367,5 +376,18 @@ function GetReplyMessage($text,$myUserId) {
 		]];
 	}*/ 	
 	return $messages;
+}
+function searchGroup($ArrGroup,$text){
+	$have_word = false ;
+	foreach ($word as $ArrGroup) {
+		if (stripos($text, $word) !== false) {
+			$have_word = true;
+		}
+	}
+	return $have_word ;
+}
+function CallNSD(){
+
+	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadCust.php?cal_id=110');
 }
 echo "OK";
