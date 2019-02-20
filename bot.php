@@ -378,10 +378,12 @@ function GetReplyMessage($text,$myUserId) {
 	}*/ 	
 	return $messages;
 }
+
 function searchGroup($ArrGroup,$text){
 	$have_word = false ;
-	foreach ($word as $ArrGroup) {
+	foreach ($ArrGroup as $word) {
 		if (stripos($text, $word) !== false) {
+			 
 			$have_word = true;
 		}
 	}
