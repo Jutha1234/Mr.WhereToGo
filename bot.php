@@ -100,7 +100,7 @@ function GetReplyMessage($text,$myUserId) {
 	{
 		$messages = [[
 			'type' => 'text',
-			'text' => 'ใครไปไหน'
+			'text' => 'ใคร' . $haveWhereToGo ;
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
