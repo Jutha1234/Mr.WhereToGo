@@ -93,11 +93,11 @@ function GetReplyMessage($text,$myUserId) {
 	else if ($haveWhereToGo  != "" && $who  != "")
 	{
 		if($when == "")
-			$when = "all";
+			$when = "วันนี้";
 		
 		$messages = [[
 			'type' => 'text',
-			'text' =>  'http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when . WhereToGo($who,$when)
+			'text' => WhereToGo($who,$when)
 		]];
 	
 	}
