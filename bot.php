@@ -78,6 +78,7 @@ function GetReplyMessage($text,$myUserId) {
 	$who = searchGroup($groupWho,$text);
 	$when = searchGroup($groupWhen,$text);
 	$haveFirstName = searchGroup($groupFirstName,$text);
+	$haveNickName = searchGroup($groupNickName,$text);
 	$Q_WhoIs = searchGroup($groupWhoIs,$text);
 	
 	if(stripos($text, "ปิดบอท") !== false){
@@ -127,6 +128,18 @@ function GetReplyMessage($text,$myUserId) {
 		$messages = [[
 			'type' => 'text',
 			'text' => $response
+		]];
+	}
+	else if ($haveFirstName != "" && $Q_WhoIs  == "" && $haveWhereToGo  == "") {
+		$messages = [[
+			'type' => 'text',
+			'text' => "คุณต้องการทราบอะไรเกี่ยวกับ" . $haveFirstName
+		]];
+	}
+	else if ($haveNickName != "" && $Q_WhoIs  == "" && $haveWhereToGo  == "") {
+		$messages = [[
+			'type' => 'text',
+			'text' => "คุณต้องการทราบอะไรเกี่ยวกับ" . $haveNickName
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
