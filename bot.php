@@ -116,14 +116,14 @@ function GetReplyMessage($text,$myUserId) {
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
 		$messages = [[
 			'type' => 'text',
-			'text' => "groupNickName " . implode(', ', $groupNickName);
+			'text' => $response
 		]];
 	}
 	else if ($haveFirstName != "" && $Q_WhoIs  == "") {
-	//	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?firstname=' . $haveFirstName );
+		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?firstname=' . $haveFirstName);
 		$messages = [[
 			'type' => 'text',
-			'text' => $haveFirstName
+			'text' => $response
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
