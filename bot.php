@@ -131,7 +131,7 @@ function GetReplyMessage($text,$myUserId) {
 		]];
 	}
 	else if ($haveNickName != "" && $Q_WhoIs  != "") {
-		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?nickname=' . $haveFirstName);
+		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?nickname=' . $haveNickName);
 		$messages = [[
 			'type' => 'text',
 			'text' => $response
