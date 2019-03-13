@@ -413,6 +413,17 @@ function WhereToGo($who,$when){
 	$ch = curl_init('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	$result = curl_exec($ch);
+
+
+	$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+	$txt = "Mickey Mouse\n";
+	fwrite($myfile, $txt);
+	$txt = "Minnie Mouse\n";
+	fwrite($myfile, $txt);
+	fwrite($result, $txt);
+	fclose($myfile);
+
+
 	return  $result;
 
 //	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
