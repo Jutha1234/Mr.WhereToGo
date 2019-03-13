@@ -108,16 +108,11 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => 'ใคร' . $haveWhereToGo 
 		]];
 	}
- 
 	else if (stripos($text, "ป้อม") !== false) {
-		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=staff&when=were');
-		 
-
 		$messages = [[
 			'type' => 'text',
-			'text' => $response
+			'text' => '2019-03-01 08:00 - 18:00  ไปงาน Netka meetup ที่พัทยาจ้า '
 		]];
-	
 	}else if (stripos($text, "วสุต") !== false) {
 		$messages = [[
 			'type' => 'text',
@@ -415,12 +410,7 @@ function searchGroup($ArrGroup,$text){
 }
 function WhereToGo($who,$when){
 
-	$ch = curl_init('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$result = curl_exec($ch);
-	return  $result;
-
-//	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
-//	return  $response;
+	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
+	return  $response;
 }
 echo "OK";
