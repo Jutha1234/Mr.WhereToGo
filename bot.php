@@ -68,8 +68,8 @@ function GetReplyMessage($text,$myUserId) {
 	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว','หน่า');
 	$groupWhen = array('วันนี้','พรุ่งนี้','เมื่อวาน');
 	$groupWhoIs = array('คือใคร','เป็นใคร','ใครคือ');
-	$groupFirstName = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=firstname');
-	$groupNickName = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=nickname');
+	$groupFirstName = explode(",", file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=firstname'));
+	$groupNickName = explode(",", file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=nickname'));
  
 
  
@@ -119,7 +119,7 @@ function GetReplyMessage($text,$myUserId) {
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
 		$messages = [[
 			'type' => 'text',
-			'text' => $groupNickName
+			'text' => $response
 		]];
 	}
 	else if ($haveFirstName != "" && $Q_WhoIs  == "") {
