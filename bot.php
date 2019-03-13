@@ -108,7 +108,7 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => 'ใคร' . $haveWhereToGo 
 		]];
 	}
-	else if (stripos($text, "staff"){
+	else if (stripos($text, "ป้อม"){
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=staff&when=were');
 		 
 
