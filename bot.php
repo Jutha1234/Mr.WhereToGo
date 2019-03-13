@@ -410,7 +410,7 @@ function searchGroup($ArrGroup,$text){
 }
 function WhereToGo($who,$when){
 
-	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
+	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
 	return  $response;
 }
 echo "OK";
