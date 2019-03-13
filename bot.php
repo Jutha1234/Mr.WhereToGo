@@ -66,7 +66,7 @@ function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
 	$groupWhereToGo = array('ไปไหน','อยู่ไหน','อยู่ไหม');
 	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว','หน่า');
-	$groupWhen = array('วันนี้','พรุ่งนี้','เมื่อวาน');
+	$groupWhen = array('วันนี้','พรุ่งนี้','เมื่อวาน','สัปดาห์นี้');
 	$groupWhoIs = array('คือใคร','เป็นใคร','ใครคือ');
 	$groupFirstName = explode(",", file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=firstname'));
 	$groupNickName = explode(",", file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=nickname'));
@@ -102,10 +102,10 @@ function GetReplyMessage($text,$myUserId) {
 	{
 		if($when == "")
 			$when = "วันนี้";
-		
+		$response =  file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/whereToGo.php?who=' . $who . '&when=' . $when);
 		$messages = [[
 			'type' => 'text',
-			'text' => WhereToGo($who,$when)
+			'text' => $response
 		]];
 	
 	}
@@ -117,7 +117,7 @@ function GetReplyMessage($text,$myUserId) {
 		]];
 	}
 	else if (stripos($text, "show staff") !== false) {
-		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
+		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php');
 		$messages = [[
 			'type' => 'text',
 			'text' => $response
@@ -449,11 +449,5 @@ function searchGroup($ArrGroup,$text){
 	}
 	return $have_word ;
 }
-function WhereToGo($who,$when){
-	$ch = curl_init('http://103.70.5.65/~haaohcom/nsd_bot/php/whereToGo.php?who=' . $who . '&when=' . $when);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$result = curl_exec($ch);
-	return  $result;
  
-}
 echo "OK";
