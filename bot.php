@@ -122,7 +122,7 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => $response
 		]];
 	}
-	else if ($haveFirstName != "" && $Q_WhoIs  == "") {
+	else if ($haveFirstName != "") {
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?firstname=' . $haveFirstName);
 		$messages = [[
 			'type' => 'text',
