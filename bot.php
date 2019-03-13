@@ -114,7 +114,7 @@ function GetReplyMessage($text,$myUserId) {
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
 		$messages = [[
 			'type' => 'text',
-			'text' => print_r($groupNickName);
+			'text' => json_encode($groupNickName); 
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
