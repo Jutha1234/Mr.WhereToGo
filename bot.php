@@ -409,8 +409,12 @@ function searchGroup($ArrGroup,$text){
 	return $have_word ;
 }
 function WhereToGo($who,$when){
+	$ch = curl_init('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$result = curl_exec($ch);
+	return  $result;
 
-	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
-	return  $response;
+//	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=' . $who . '&when=' . $when);
+//	return  $response;
 }
 echo "OK";
