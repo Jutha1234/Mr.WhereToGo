@@ -108,7 +108,8 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => 'ใคร' . $haveWhereToGo 
 		]];
 	}
-	else if (stripos($text, "ป้อม"){
+ 
+	else if (stripos($text, "ป้อม") !== false) {
 		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/showStaff.php?who=staff&when=were');
 		 
 
@@ -117,12 +118,6 @@ function GetReplyMessage($text,$myUserId) {
 			'text' => $response
 		]];
 	
-	}
-	else if (stripos($text, "ป้อม") !== false) {
-		$messages = [[
-			'type' => 'text',
-			'text' => '2019-03-01 08:00 - 18:00  ไปงาน Netka meetup ที่พัทยาจ้า '
-		]];
 	}else if (stripos($text, "วสุต") !== false) {
 		$messages = [[
 			'type' => 'text',
