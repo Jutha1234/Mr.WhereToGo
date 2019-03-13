@@ -70,6 +70,7 @@ function GetReplyMessage($text,$myUserId) {
 	$groupWhoIs = array('คือใคร','เป็นใคร','ใครคือ');
 	$groupFirstName = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=firstname');
 	$groupNickName = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getStaff.php?type=nickname');
+ 
 
  
 
