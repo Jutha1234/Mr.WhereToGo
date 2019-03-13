@@ -65,7 +65,7 @@ if (!is_null($events['events'])) {
 function GetReplyMessage($text,$myUserId) {
 	$serviceUrl = 'http://vsmsdev.apps.thaibev.com/linebot/linebotWCF';
 	$groupWhereToGo = array('ไปไหน','อยู่ไหน','อยู่ไหม');
-	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว');
+	$groupWho = array('วสุต','นิน','เอิร์ธ','เอิท','โทนี่','เอ็กซ์','บะห์','อ้อ','ออย','วิท','เต้','น้อย','ดิว','หน่า');
 	$groupWhen = array('วันนี้','พรุ่งนี้','เมื่อวาน');
 
 	$haveWhereToGo = searchGroup($groupWhereToGo,$text);
@@ -410,7 +410,12 @@ function searchGroup($ArrGroup,$text){
 }
 function WhereToGo($who,$when){
 
-	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
-	return  $response;
+	$ch = curl_init('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$result = curl_exec($ch);
+	return  $result;
+
+//	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/loadBot.php?who=' . $who . '&when=' . $when);
+//	return  $response;
 }
 echo "OK";
