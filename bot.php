@@ -120,10 +120,10 @@ function GetReplyMessage($text,$myUserId) {
 		]];
 	}
 	else if ($haveFirstName != "" && $Q_WhoIs  == "") {
-		$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?firstname=' . $haveFirstName );
+	//	$response = file_get_contents('http://103.70.5.65/~haaohcom/nsd_bot/php/getWhoIs.php?firstname=' . $haveFirstName );
 		$messages = [[
 			'type' => 'text',
-			'text' => $response
+			'text' => $haveFirstName
 		]];
 	}
 	else if (stripos($text, "ป้อม") !== false) {
