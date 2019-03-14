@@ -75,7 +75,7 @@ function GetReplyMessage($text,$myUserId) {
  
 
 	$haveWhereToGo = searchGroup($groupWhereToGo,$text);
-	$who = searchGroup($groupWho,$text);
+	$who = searchGroup($groupNickName,$text);
 	$when = searchGroup($groupWhen,$text);
 	$haveFirstName = searchGroup($groupFirstName,$text);
 	$haveNickName = searchGroup($groupNickName,$text);
